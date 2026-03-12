@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Writing Tests for Devices &#8212; ophyd-async 0.1.dev894+g5150bc883 documentation</title>
+    <title>Writing Tests for Devices &#8212; ophyd-async 0.1.dev917+gd0e9e677c documentation</title>
   
   
   
@@ -42,9 +42,9 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=0ea8cd4a"></script>
-    <script src="../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/documentation_options.js?v=857d9ec8"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=30646c52"></script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
@@ -129,8 +129,8 @@
       
     
     
-    <img src="../_static/ophyd-async-logo.svg" class="logo__image only-light" alt="ophyd-async 0.1.dev894+g5150bc883 documentation - Home"/>
-    <img src="../_static/ophyd-async-logo.svg" class="logo__image only-dark pst-js-only" alt="ophyd-async 0.1.dev894+g5150bc883 documentation - Home"/>
+    <img src="../_static/ophyd-async-logo.svg" class="logo__image only-light" alt="ophyd-async 0.1.dev917+gd0e9e677c documentation - Home"/>
+    <img src="../_static/ophyd-async-logo.svg" class="logo__image only-dark pst-js-only" alt="ophyd-async 0.1.dev917+gd0e9e677c documentation - Home"/>
   
   
 </a></div>
@@ -581,13 +581,13 @@
     <span class="n">stop_mock</span><span class="o">.</span><span class="n">assert_not_called</span><span class="p">()</span>
     <span class="c1"># Call stop and check it&#39;s called with the default value</span>
     <span class="k">await</span> <span class="n">mock_motor</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
-    <span class="n">stop_mock</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">wait</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">stop_mock</span><span class="o">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
     <span class="c1"># We can also track all the mock puts that have happened on the device</span>
     <span class="n">parent_mock</span> <span class="o">=</span> <span class="n">get_mock</span><span class="p">(</span><span class="n">mock_motor</span><span class="p">)</span>
     <span class="k">await</span> <span class="n">mock_motor</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">parent_mock</span><span class="o">.</span><span class="n">mock_calls</span> <span class="o">==</span> <span class="p">[</span>
-        <span class="n">call</span><span class="o">.</span><span class="n">stop_</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">wait</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-        <span class="n">call</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="n">wait</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+        <span class="n">call</span><span class="o">.</span><span class="n">stop_</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="kc">None</span><span class="p">),</span>
+        <span class="n">call</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">15</span><span class="p">),</span>
     <span class="p">]</span>
 </pre></div>
 </div>
@@ -639,7 +639,7 @@
 <ul class="simple">
 <li><p><a class="reference internal" href="../_api/ophyd_async/ophyd_async.core.html#ophyd_async.core.set_mock_values" title="ophyd_async.core.set_mock_values"><code class="xref myst py py-func docutils literal notranslate"><span class="pre">set_mock_values</span></code></a> if you want to set a series of mock values, with repeated checks at each value</p></li>
 <li><p><a class="reference internal" href="../_api/ophyd_async/ophyd_async.core.html#ophyd_async.core.callback_on_mock_put" title="ophyd_async.core.callback_on_mock_put"><code class="xref myst py py-func docutils literal notranslate"><span class="pre">callback_on_mock_put</span></code></a> to allow setting a Signal to have side effects, like setting another Signal</p></li>
-<li><p><a class="reference internal" href="../_api/ophyd_async/ophyd_async.core.html#ophyd_async.core.set_mock_put_proceeds" title="ophyd_async.core.set_mock_put_proceeds"><code class="xref myst py py-func docutils literal notranslate"><span class="pre">set_mock_put_proceeds</span></code></a> to block or unblock <code class="docutils literal notranslate"><span class="pre">Signal.set(...,</span> <span class="pre">wait=True)</span></code> from completing</p></li>
+<li><p><a class="reference internal" href="../_api/ophyd_async/ophyd_async.core.html#ophyd_async.core.set_mock_put_proceeds" title="ophyd_async.core.set_mock_put_proceeds"><code class="xref myst py py-func docutils literal notranslate"><span class="pre">set_mock_put_proceeds</span></code></a> to block or unblock <code class="docutils literal notranslate"><span class="pre">Signal.set()</span></code> from completing</p></li>
 <li><p><a class="reference internal" href="../_api/ophyd_async/ophyd_async.core.html#ophyd_async.core.mock_puts_blocked" title="ophyd_async.core.mock_puts_blocked"><code class="xref myst py py-func docutils literal notranslate"><span class="pre">mock_puts_blocked</span></code></a> a context manager that blocks put proceeds at the start, and unblocks at the end</p></li>
 </ul>
 <section id="automatic-mock-behavior-injection">
@@ -659,7 +659,7 @@
         <span class="n">set_mock_value</span><span class="p">(</span><span class="n">device</span><span class="o">.</span><span class="n">motor_done_move</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
         <span class="c1"># When setpoint is written to, immediately update readback and done flag</span>
-        <span class="k">def</span><span class="w"> </span><span class="nf">_instant_move</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">wait</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">_instant_move</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
             <span class="n">set_mock_value</span><span class="p">(</span><span class="n">device</span><span class="o">.</span><span class="n">motor_done_move</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># Moving</span>
             <span class="n">set_mock_value</span><span class="p">(</span><span class="n">device</span><span class="o">.</span><span class="n">user_readback</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>  <span class="c1"># Arrive instantly</span>
             <span class="n">set_mock_value</span><span class="p">(</span><span class="n">device</span><span class="o">.</span><span class="n">motor_done_move</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Done</span>
