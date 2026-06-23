@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ophyd_async.epics.demo._motor &#8212; ophyd-async 0.1.dev946+g2b648bc92 documentation</title>
+    <title>ophyd_async.epics.demo._motor &#8212; ophyd-async 0.1.dev953+gabc4ecdde documentation</title>
   
   
   
@@ -41,7 +41,7 @@
   <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
 <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
 
-    <script src="../../../../_static/documentation_options.js?v=b950e110"></script>
+    <script src="../../../../_static/documentation_options.js?v=7ee9a23d"></script>
     <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -569,8 +569,8 @@ window.runMermaid = runMermaid;</script>
       
     
     
-    <img src="../../../../_static/ophyd-async-logo.svg" class="logo__image only-light" alt="ophyd-async 0.1.dev946+g2b648bc92 documentation - Home"/>
-    <img src="../../../../_static/ophyd-async-logo.svg" class="logo__image only-dark pst-js-only" alt="ophyd-async 0.1.dev946+g2b648bc92 documentation - Home"/>
+    <img src="../../../../_static/ophyd-async-logo.svg" class="logo__image only-light" alt="ophyd-async 0.1.dev953+gabc4ecdde documentation - Home"/>
+    <img src="../../../../_static/ophyd-async-logo.svg" class="logo__image only-dark pst-js-only" alt="ophyd-async 0.1.dev953+gabc4ecdde documentation - Home"/>
   
   
 </a></div>
@@ -911,6 +911,7 @@ window.runMermaid = runMermaid;</script>
     <span class="n">SignalRW</span><span class="p">,</span>
     <span class="n">StandardMovable</span><span class="p">,</span>
     <span class="n">StandardReadable</span><span class="p">,</span>
+    <span class="n">TimeoutCalculator</span><span class="p">,</span>
     <span class="n">TriggerableCommand</span><span class="p">,</span>
     <span class="n">set_and_wait_for_other_value</span><span class="p">,</span>
 <span class="p">)</span>
@@ -932,20 +933,20 @@ window.runMermaid = runMermaid;</script>
         <span class="n">velocity</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
         <span class="k">return</span> <span class="nb">abs</span><span class="p">(</span><span class="n">new_position</span> <span class="o">-</span> <span class="n">old_position</span><span class="p">)</span> <span class="o">/</span> <span class="n">velocity</span> <span class="o">+</span> <span class="n">DEFAULT_TIMEOUT</span>
 
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_position</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_position</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="n">TimeoutCalculator</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="c1"># If we are close to the desired position then break</span>
         <span class="k">await</span> <span class="n">set_and_wait_for_other_value</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setpoint</span><span class="p">,</span>
             <span class="n">new_position</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">readback</span><span class="p">,</span>
             <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">new_position</span><span class="p">)),</span>
-            <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span>
+            <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">(),</span>
         <span class="p">)</span>
 
 
 <div class="viewcode-block" id="DemoMotor">
 <a class="viewcode-back" href="../../../../_api/ophyd_async/ophyd_async.epics.demo.html#ophyd_async.epics.demo.DemoMotor">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">DemoMotor</span><span class="p">(</span><span class="n">EpicsDevice</span><span class="p">,</span> <span class="n">StandardReadable</span><span class="p">,</span> <span class="n">StandardMovable</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">DemoMotor</span><span class="p">(</span><span class="n">EpicsDevice</span><span class="p">,</span> <span class="n">StandardReadable</span><span class="p">,</span> <span class="n">StandardMovable</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A demo movable that moves based on velocity.&quot;&quot;&quot;</span>
 
     <span class="c1"># Define some signals</span>

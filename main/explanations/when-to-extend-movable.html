@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>When should a device extend movable &#8212; ophyd-async 0.1.dev946+g2b648bc92 documentation</title>
+    <title>When should a device extend movable &#8212; ophyd-async 0.1.dev953+gabc4ecdde documentation</title>
   
   
   
@@ -42,7 +42,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
 
-    <script src="../_static/documentation_options.js?v=b950e110"></script>
+    <script src="../_static/documentation_options.js?v=7ee9a23d"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -136,8 +136,8 @@
       
     
     
-    <img src="../_static/ophyd-async-logo.svg" class="logo__image only-light" alt="ophyd-async 0.1.dev946+g2b648bc92 documentation - Home"/>
-    <img src="../_static/ophyd-async-logo.svg" class="logo__image only-dark pst-js-only" alt="ophyd-async 0.1.dev946+g2b648bc92 documentation - Home"/>
+    <img src="../_static/ophyd-async-logo.svg" class="logo__image only-light" alt="ophyd-async 0.1.dev953+gabc4ecdde documentation - Home"/>
+    <img src="../_static/ophyd-async-logo.svg" class="logo__image only-dark pst-js-only" alt="ophyd-async 0.1.dev953+gabc4ecdde documentation - Home"/>
   
   
 </a></div>
@@ -515,7 +515,7 @@
                   
   <section id="when-should-a-device-extend-movable">
 <h1>When should a device extend movable<a class="headerlink" href="#when-should-a-device-extend-movable" title="Link to this heading">#</a></h1>
-<p>The <a class="reference external" href="https://blueskyproject.io/bluesky/main/hardware.html#bluesky.protocols.Movable" title="bluesky 1.15.2.dev8+gad521bf7e"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">Movable</span></code></span></a> protocol indicates that a device has a <code class="docutils literal notranslate"><span class="pre">set</span></code> method which can be called in bluesky through the plan stubs <a class="reference external" href="https://blueskyproject.io/bluesky/main/generated/bluesky.plan_stubs.abs_set.html#bluesky.plan_stubs.abs_set" title="bluesky 1.15.2.dev8+gad521bf7e"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">bps.abs_set</span></code></span></a> and <a class="reference external" href="https://blueskyproject.io/bluesky/main/generated/bluesky.plan_stubs.mv.html#bluesky.plan_stubs.mv" title="bluesky 1.15.2.dev8+gad521bf7e"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">bps.mv</span></code></span></a>. The <a class="reference external" href="https://blueskyproject.io/bluesky/main/generated/bluesky.run_engine.RunEngine.html#bluesky.run_engine.RunEngine" title="bluesky 1.15.2.dev8+gad521bf7e"><span class="xref myst">RunEngine</span></a> treats this <code class="docutils literal notranslate"><span class="pre">set</span></code> as an atomic operation. A <code class="docutils literal notranslate"><span class="pre">Movable</span></code> device is appropriate when:</p>
+<p>The <a class="reference external" href="https://blueskyproject.io/bluesky/main/hardware.html#bluesky.protocols.Movable" title="bluesky 1.15.2.dev20+gd276e2bf8"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">Movable</span></code></span></a> protocol indicates that a device has a <code class="docutils literal notranslate"><span class="pre">set</span></code> method which can be called in bluesky through the plan stubs <a class="reference external" href="https://blueskyproject.io/bluesky/main/generated/bluesky.plan_stubs.abs_set.html#bluesky.plan_stubs.abs_set" title="bluesky 1.15.2.dev20+gd276e2bf8"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">bps.abs_set</span></code></span></a> and <a class="reference external" href="https://blueskyproject.io/bluesky/main/generated/bluesky.plan_stubs.mv.html#bluesky.plan_stubs.mv" title="bluesky 1.15.2.dev20+gd276e2bf8"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">bps.mv</span></code></span></a>. The <a class="reference external" href="https://blueskyproject.io/bluesky/main/generated/bluesky.run_engine.RunEngine.html#bluesky.run_engine.RunEngine" title="bluesky 1.15.2.dev20+gd276e2bf8"><span class="xref myst">RunEngine</span></a> treats this <code class="docutils literal notranslate"><span class="pre">set</span></code> as an atomic operation. A <code class="docutils literal notranslate"><span class="pre">Movable</span></code> device is appropriate when:</p>
 <ul class="simple">
 <li><p>The <code class="docutils literal notranslate"><span class="pre">set</span></code> involves changing multiple signals in parallel alongside a desired ordering of the setting of signals - having this logic inside an asyncio function can provide speedup.</p></li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">RunEngine</span></code> should not be altering any other devices while this <code class="docutils literal notranslate"><span class="pre">set</span></code> is taking place.</p></li>
@@ -525,7 +525,7 @@
 <p>The <code class="docutils literal notranslate"><span class="pre">set</span></code> method, in general, should be used with primitive values rather than more complex types, for example, dataclasses. Using the latter here leads to extra boilerplate at the plan level. An exception to this is where using <code class="docutils literal notranslate"><span class="pre">set</span></code> will provide speedup - in this case it could be worth the extra boilerplate.</p>
 <section id="what-to-use-instead">
 <h2>What to use instead<a class="headerlink" href="#what-to-use-instead" title="Link to this heading">#</a></h2>
-<p>If the device doesn’t satisfy the above criteria, it is generally more suitable to use combinations of <a class="reference external" href="https://blueskyproject.io/bluesky/main/generated/bluesky.plan_stubs.mv.html#bluesky.plan_stubs.mv" title="bluesky 1.15.2.dev8+gad521bf7e"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">bps.mv</span></code></span></a> and <a class="reference external" href="https://blueskyproject.io/bluesky/main/generated/bluesky.plan_stubs.abs_set.html#bluesky.plan_stubs.abs_set" title="bluesky 1.15.2.dev8+gad521bf7e"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">bps.abs_set</span></code></span></a> on individual signals of a plan’s devices. This avoids adding unnecessary complexity to the device whilst giving the plan more flexibility.</p>
+<p>If the device doesn’t satisfy the above criteria, it is generally more suitable to use combinations of <a class="reference external" href="https://blueskyproject.io/bluesky/main/generated/bluesky.plan_stubs.mv.html#bluesky.plan_stubs.mv" title="bluesky 1.15.2.dev20+gd276e2bf8"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">bps.mv</span></code></span></a> and <a class="reference external" href="https://blueskyproject.io/bluesky/main/generated/bluesky.plan_stubs.abs_set.html#bluesky.plan_stubs.abs_set" title="bluesky 1.15.2.dev20+gd276e2bf8"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">bps.abs_set</span></code></span></a> on individual signals of a plan’s devices. This avoids adding unnecessary complexity to the device whilst giving the plan more flexibility.</p>
 </section>
 <section id="using-standardmovable">
 <h2>Using StandardMovable<a class="headerlink" href="#using-standardmovable" title="Link to this heading">#</a></h2>
@@ -559,14 +559,14 @@ device needs, and override the hook methods that differ from the defaults:</p>
         <span class="n">velocity</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
         <span class="k">return</span> <span class="nb">abs</span><span class="p">(</span><span class="n">new_position</span> <span class="o">-</span> <span class="n">old_position</span><span class="p">)</span> <span class="o">/</span> <span class="n">velocity</span> <span class="o">+</span> <span class="n">DEFAULT_TIMEOUT</span>
 
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_position</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_position</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="n">TimeoutCalculator</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="c1"># If we are close to the desired position then break</span>
         <span class="k">await</span> <span class="n">set_and_wait_for_other_value</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setpoint</span><span class="p">,</span>
             <span class="n">new_position</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">readback</span><span class="p">,</span>
             <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">new_position</span><span class="p">)),</span>
-            <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span>
+            <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">(),</span>
         <span class="p">)</span>
 </pre></div>
 </div>
@@ -607,7 +607,7 @@ device needs, and override the hook methods that differ from the defaults:</p>
 <h3>Wiring it into the Device<a class="headerlink" href="#wiring-it-into-the-device" title="Link to this heading">#</a></h3>
 <p>Attach the logic via a <code class="docutils literal notranslate"><span class="pre">&#64;cached_property</span></code> in the Device subclass. Multiple inheritance
 with <a class="reference internal" href="../_api/ophyd_async/ophyd_async.core.html#ophyd_async.core.StandardReadable" title="ophyd_async.core.StandardReadable"><code class="xref myst py py-class docutils literal notranslate"><span class="pre">StandardReadable</span></code></a> is supported and is the normal pattern:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">DemoMotor</span><span class="p">(</span><span class="n">EpicsDevice</span><span class="p">,</span> <span class="n">StandardReadable</span><span class="p">,</span> <span class="n">StandardMovable</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">DemoMotor</span><span class="p">(</span><span class="n">EpicsDevice</span><span class="p">,</span> <span class="n">StandardReadable</span><span class="p">,</span> <span class="n">StandardMovable</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A demo movable that moves based on velocity.&quot;&quot;&quot;</span>
 
     <span class="c1"># Define some signals</span>
