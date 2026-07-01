@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Declarative vs Procedural Devices &#8212; ophyd-async 0.1.dev953+gabc4ecdde documentation</title>
+    <title>Declarative vs Procedural Devices &#8212; ophyd-async 0.1.dev958+gc33d42a9b documentation</title>
   
   
   
@@ -42,7 +42,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
 
-    <script src="../_static/documentation_options.js?v=7ee9a23d"></script>
+    <script src="../_static/documentation_options.js?v=b309a499"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -61,7 +61,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Design goals and differences with ophyd sync" href="design-goals.html" />
-    <link rel="prev" title="18. Typed Command to replace SignalX" href="decisions/0018-typed-command.html" />
+    <link rel="prev" title="19. SoftSignalBackend Wrapping Arbitrary Callables" href="decisions/0019-soft-signals-backed-by-arbitrary-callables.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="main" />
@@ -136,8 +136,8 @@
       
     
     
-    <img src="../_static/ophyd-async-logo.svg" class="logo__image only-light" alt="ophyd-async 0.1.dev953+gabc4ecdde documentation - Home"/>
-    <img src="../_static/ophyd-async-logo.svg" class="logo__image only-dark pst-js-only" alt="ophyd-async 0.1.dev953+gabc4ecdde documentation - Home"/>
+    <img src="../_static/ophyd-async-logo.svg" class="logo__image only-light" alt="ophyd-async 0.1.dev958+gc33d42a9b documentation - Home"/>
+    <img src="../_static/ophyd-async-logo.svg" class="logo__image only-dark pst-js-only" alt="ophyd-async 0.1.dev958+gc33d42a9b documentation - Home"/>
   
   
 </a></div>
@@ -443,6 +443,7 @@
 <li class="toctree-l2"><a class="reference internal" href="decisions/0016-ad-writer-factory.html">16. Replace AreaDetector writer parameters with ADWriterFactory</a></li>
 <li class="toctree-l2"><a class="reference internal" href="decisions/0017-standard-movable.html">17. Create StandardMovable with Composition-Based Logic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="decisions/0018-typed-command.html">18. Typed Command to replace SignalX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="decisions/0019-soft-signals-backed-by-arbitrary-callables.html">19. SoftSignalBackend Wrapping Arbitrary Callables</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Declarative vs Procedural Devices</a></li>
@@ -576,6 +577,8 @@
 </pre></div>
 </div>
 <p>It is compact and has the minimum amount of boilerplate, but is limited in its scope to what sorts of Signals and Devices the base class can create. It also requires the usage of a <a class="reference internal" href="../_api/ophyd_async/ophyd_async.core.html#ophyd_async.core.StandardReadableFormat" title="ophyd_async.core.StandardReadableFormat"><code class="xref myst py py-class docutils literal notranslate"><span class="pre">StandardReadableFormat</span></code></a> for each Signal if using <a class="reference internal" href="../_api/ophyd_async/ophyd_async.core.html#ophyd_async.core.StandardReadable" title="ophyd_async.core.StandardReadable"><code class="xref myst py py-class docutils literal notranslate"><span class="pre">StandardReadable</span></code></a> which may be more verbose than the procedural approach. It is best suited for introspectable FastCS and Tango devices, and repetitive EPICS Devices that are wrapped into larger Devices like areaDetectors.</p>
+<p><em>Note on using the declarative approach for Tango device servers:<br>
+Tango devices support attribute names that contain special characters including decimal points. This may result in invalid python syntax if this signal is declared in an annotation. These signals will still be autofilled by the device connector and will remain useable via <code class="docutils literal notranslate"><span class="pre">getattr</span></code> but they will not appear as top level attributes. These attributes should be declared procedurally with syntax-friendly names.</em></p>
 </section>
 <section id="grey-area">
 <h2>Grey area<a class="headerlink" href="#grey-area" title="Link to this heading">#</a></h2>
@@ -609,12 +612,12 @@
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="decisions/0018-typed-command.html"
+       href="decisions/0019-soft-signals-backed-by-arbitrary-callables.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">18. Typed Command to replace SignalX</p>
+        <p class="prev-next-title">19. SoftSignalBackend Wrapping Arbitrary Callables</p>
       </div>
     </a>
     <a class="right-next"
